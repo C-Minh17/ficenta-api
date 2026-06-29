@@ -1,10 +1,13 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import createUserDto from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import LoginDto from './dto/login.dto';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { locaAuthGuard } from 'src/guards/local-auth.guard';
+import { TransformResponseInterceptor } from 'src/common/interceptor/transform-response.interceptor';
 
+@UseInterceptors(TransformResponseInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -26,5 +29,11 @@ export class AuthController {
   @Post('/refresh')
   async refresh(@Body('refreshToken') refreshToken: string) {
     return this.authService.refreshTokens(refreshToken);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("/me")
+  getProfile(@Req() req: any) {
+    return req.user
   }
 }

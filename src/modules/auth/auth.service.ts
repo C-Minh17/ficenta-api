@@ -27,6 +27,7 @@ export class AuthService {
     await this.userService.storeRefreshToken(data._id, RefreshToken, 7)
 
     return {
+      accessToken: accessToken,
       access_token: accessToken,
       refresh_token: RefreshToken
     }
