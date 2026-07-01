@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, Patch, Post, Put, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import updateWalletDto from './dto/update-wallet.dto';
 import createWalletDto from './dto/create-wallet.dto';
+import { TransformResponseInterceptor } from 'src/common/interceptor/transform-response.interceptor';
 
+@UseInterceptors(TransformResponseInterceptor)
 @Controller('wallet')
 export class WalletController {
   constructor(private readonly walletService: WalletService) { }

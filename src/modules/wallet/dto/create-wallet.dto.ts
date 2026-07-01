@@ -5,6 +5,10 @@ export default class createWalletDto {
   @IsNotEmpty()
   name: string;
 
+  @IsMongoId()
+  @IsOptional()
+  user_id: string;
+
   @IsIn(['cash', 'bank', 'credit_card', 'savings'])
   @IsNotEmpty()
   type: 'cash' | 'bank' | 'credit_card' | 'savings';

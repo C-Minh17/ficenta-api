@@ -13,7 +13,7 @@ export class Categories {
   @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ default: "" })
   icon?: string
 
   @Prop({

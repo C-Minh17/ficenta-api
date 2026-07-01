@@ -5,12 +5,20 @@ export default class createCategoryDto {
   @IsString()
   name: string;
 
+  @IsMongoId()
+  @IsOptional()
+  user_id: string;
+
   @IsString()
   @IsOptional()
   icon?: string
 
   @IsNotEmpty()
-  @IsIn(['income', ' expense'])
-  type: 'income' | ' expense'
+  @IsIn(['income', 'expense'])
+  type: 'income' | 'expense';
+
+  // @IsBoolean()
+  // @IsOptional()
+  // is_default?: boolean
 
 }
