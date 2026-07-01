@@ -25,7 +25,6 @@ export class TransformResponseInterceptor<T>
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<Response<T>> {
-    // Retrieve custom message set by @ResponseMessage decorator if present
     const responseMessage = this.reflector.get<string>(
       RESPONSE_MESSAGE,
       context.getHandler(),
@@ -36,19 +35,16 @@ export class TransformResponseInterceptor<T>
         let message = responseMessage;
         let responseData = data;
 
-        // If the return object itself has a message and data structure, extract them
         if (data && typeof data === 'object') {
           if ('message' in data && 'data' in data) {
             message = data.message;
             responseData = data.data;
           } else if ('message' in data && Object.keys(data).length === 1) {
-            // If the handler only returned an object with a message (e.g. { message: '...' })
             message = data.message;
             responseData = null;
           }
         }
 
-        // Fallback default message if none is provided
         if (!message) {
           const request = context.switchToHttp().getRequest();
           const method = request.method;

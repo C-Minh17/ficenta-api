@@ -22,7 +22,7 @@ export class Users {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, enum: ["male", "female", "other"] })
   gender: string;
 
   @Prop()
