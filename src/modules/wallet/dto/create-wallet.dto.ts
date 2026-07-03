@@ -1,13 +1,9 @@
-import { IsBoolean, IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
 
 export default class createWalletDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  @IsMongoId()
-  @IsOptional()
-  user_id: string;
 
   @IsIn(['cash', 'bank', 'credit_card', 'savings'])
   @IsNotEmpty()
@@ -17,12 +13,14 @@ export default class createWalletDto {
   @IsOptional()
   currency?: string;
 
-  @IsNumber()
-  @IsOptional()
-  initial_balance?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // @Min(0)
+  // initial_balance?: number;
 
   @IsNumber()
-  @IsOptional()
+  @IsNotEmpty()
+  @Min(0)
   current_balance?: number;
 
   @IsBoolean()

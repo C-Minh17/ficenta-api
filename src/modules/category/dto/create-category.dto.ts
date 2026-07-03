@@ -5,10 +5,6 @@ export default class createCategoryDto {
   @IsString()
   name: string;
 
-  @IsMongoId()
-  @IsOptional()
-  user_id: string;
-
   @IsString()
   @IsOptional()
   icon?: string

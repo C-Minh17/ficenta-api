@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { CategoryModule } from './modules/category/category.module';
+import { TransferModule } from './modules/transfer/transfer.module';
 
 
 @Module({
@@ -17,6 +18,7 @@ import { CategoryModule } from './modules/category/category.module';
     UserModule,
     WalletModule,
     CategoryModule,
+    TransferModule,
   ],
   controllers: [AppController],
   providers: [AppService],

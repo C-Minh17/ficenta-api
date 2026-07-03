@@ -18,7 +18,10 @@ export class WalletService {
   }
 
   async addWallet(dataWallet: createWalletDto) {
-    const wallet = new this.walletModel(dataWallet)
+    const wallet = new this.walletModel({
+      ...dataWallet,
+      initial_balance: dataWallet.current_balance
+    })
     await wallet.save()
     return wallet
   }
