@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { CategoryModule } from './modules/category/category.module';
 import { TransferModule } from './modules/transfer/transfer.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { BudgetModule } from './modules/budget/budget.module';
 
 
 @Module({
@@ -19,6 +21,8 @@ import { TransferModule } from './modules/transfer/transfer.module';
     WalletModule,
     CategoryModule,
     TransferModule,
+    TransactionModule,
+    BudgetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
