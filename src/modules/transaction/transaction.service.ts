@@ -25,7 +25,8 @@ export class TransactionService {
     const transactions = await this.transactionModel
       .find({ wallet_id: { $in: listWalletId } })
       .populate('wallet_id')
-      .populate('category_id');
+      .populate('category_id')
+      .sort({ transaction_date: -1, created_at: -1 });
 
     return transactions;
   }
