@@ -22,6 +22,9 @@ export class RefreshToken {
 
   @Prop()
   replacedByToken?: string;
+
+  @Prop()
+  revokedAt?: Date;
 }
 
 export const schemaRefreshToken = SchemaFactory.createForClass(RefreshToken)

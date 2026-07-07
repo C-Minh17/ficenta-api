@@ -44,8 +44,14 @@ export class AuthService {
     }
 
     if (storedToken.revoked || storedToken.replacedByToken) {
-      await this.userService.revokeAllTokensForUser(payload.sub)
-      throw new UnauthorizedException("Cảnh báo bảo mật: Token đã được sử dụng trước đó!");
+      const gracePeriodMs = 10 * 1000; // 10 seconds grace period
+      const revokedAtTime = (storedToken as any).revokedAt ? new Date((storedToken as any).revokedAt).getTime() : 0;
+      const isWithinGracePeriod = Date.now() - revokedAtTime < gracePeriodMs;
+
+      if (!isWithinGracePeriod) {
+        await this.userService.revokeAllTokensForUser(payload.sub)
+        throw new UnauthorizedException("Cảnh báo bảo mật: Token đã được sử dụng trước đó!");
+      }
     }
 
     const newPayload = {
@@ -56,6 +62,7 @@ export class AuthService {
     const newRefreshToken = this.jwtService.sign(newPayload, { expiresIn: '7d' });
 
     storedToken.revoked = true;
+    (storedToken as any).revokedAt = new Date();
     storedToken.replacedByToken = this.userService.hashToken(newRefreshToken);
     await storedToken.save();
 
