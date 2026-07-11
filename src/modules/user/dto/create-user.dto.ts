@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsString } from "class-validator";
+import { IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export default class createUserDto {
   @IsString()
@@ -26,5 +26,6 @@ export default class createUserDto {
   gender: string;
 
   @IsString()
+  @IsOptional()
   picture?: string;
 }

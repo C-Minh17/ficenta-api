@@ -10,6 +10,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { TransferModule } from './modules/transfer/transfer.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { BudgetModule } from './modules/budget/budget.module';
+import { SavingGoalModule } from './modules/saving-goal/saving-goal.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { BudgetModule } from './modules/budget/budget.module';
     TransferModule,
     TransactionModule,
     BudgetModule,
+    SavingGoalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

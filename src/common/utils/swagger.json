@@ -1645,6 +1645,297 @@
           }
         }
       }
+    },
+    "/saving-goal": {
+      "get": {
+        "tags": [
+          "Saving Goal"
+        ],
+        "summary": "Lấy danh sách tất cả mục tiêu tiết kiệm",
+        "description": "Lấy toàn bộ danh sách mục tiêu tiết kiệm của người dùng đăng nhập hiện tại.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuccessResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Get data successfully"
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SavingGoal"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Chưa xác thực hoặc token không hợp lệ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Saving Goal"
+        ],
+        "summary": "Tạo mục tiêu tiết kiệm mới",
+        "description": "Tạo một mục tiêu tiết kiệm mới liên kết với một ví cụ thể.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSavingGoalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuccessResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Create data successfully"
+                        },
+                        "data": {
+                          "$ref": "#/components/schemas/SavingGoal"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu gửi lên không hợp lệ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ví không thuộc về người dùng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ví không tồn tại",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/saving-goal/{id}": {
+      "put": {
+        "tags": [
+          "Saving Goal"
+        ],
+        "summary": "Cập nhật mục tiêu tiết kiệm",
+        "description": "Cập nhật thông tin của một mục tiêu tiết kiệm theo ID.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID của mục tiêu tiết kiệm cần cập nhật",
+            "schema": {
+              "type": "string",
+              "format": "mongo-id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSavingGoalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuccessResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Update data successfully"
+                        },
+                        "data": {
+                          "$ref": "#/components/schemas/SavingGoal"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Không có quyền sửa đổi mục tiêu tiết kiệm hoặc ví này",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mục tiêu tiết kiệm hoặc ví không tồn tại",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Saving Goal"
+        ],
+        "summary": "Xóa mục tiêu tiết kiệm",
+        "description": "Xóa một mục tiêu tiết kiệm theo ID.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID của mục tiêu tiết kiệm cần xóa",
+            "schema": {
+              "type": "string",
+              "format": "mongo-id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuccessResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Delete data successfully"
+                        },
+                        "data": {
+                          "$ref": "#/components/schemas/SavingGoal"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Không có quyền xóa mục tiêu tiết kiệm này",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mục tiêu tiết kiệm không tồn tại",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2417,6 +2708,102 @@
           "transaction_date": {
             "type": "string",
             "example": "2026-07-06"
+          }
+        }
+      },
+      "SavingGoal": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "mongo-id",
+            "example": "64a0f823e2003c2a1c0d4576"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "mongo-id",
+            "example": "64a0f823e2003c2a1c0d4571"
+          },
+          "wallet_id": {
+            "$ref": "#/components/schemas/Wallet"
+          },
+          "name": {
+            "type": "string",
+            "example": "Mua điện thoại mới"
+          },
+          "target_amount": {
+            "type": "number",
+            "example": 15000000
+          },
+          "target_date": {
+            "type": "string",
+            "example": "2026-12-31"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-06T11:20:00.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-06T11:20:00.000Z"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "CreateSavingGoalDto": {
+        "type": "object",
+        "required": [
+          "name",
+          "wallet_id",
+          "target_amount",
+          "target_date"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Mua điện thoại mới"
+          },
+          "wallet_id": {
+            "type": "string",
+            "format": "mongo-id",
+            "example": "64a0f823e2003c2a1c0d4568"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "example": 15000000
+          },
+          "target_date": {
+            "type": "string",
+            "example": "2026-12-31"
+          }
+        }
+      },
+      "UpdateSavingGoalDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Mua điện thoại mới"
+          },
+          "wallet_id": {
+            "type": "string",
+            "format": "mongo-id",
+            "example": "64a0f823e2003c2a1c0d4568"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "example": 15000000
+          },
+          "target_date": {
+            "type": "string",
+            "example": "2026-12-31"
           }
         }
       }
